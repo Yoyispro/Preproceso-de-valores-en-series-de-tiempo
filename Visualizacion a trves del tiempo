@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = '/content/drive/MyDrive/Bases de Datos/Aquifer_Petrignano.csv'
+
+
+df = pd.read_csv(file_path)
+
+#Cada característica a lo largo del tiempo
+for column in df.columns[1:]:
+    plt.figure(figsize=(10, 6))
+    plt.plot(df['Date'], df[column])
+    plt.title(column)
+    plt.xlabel('Fecha')
+    plt.ylabel('Valor')
+    plt.show()
+
+
+#Ordenamos datos cronologicamente por la columna date
+#Si no se especifica el formato de fecha pandas lo interpretara y hay riesgo de inconsistencias en la interpretación
+df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%Y')
+
+df = df.sort_values(by='Date')
